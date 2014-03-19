@@ -58,7 +58,7 @@
                            }
                                       error:&error]) {
         if(error) {
-            NSLog(@"ERROR: %@", error);
+            NSLog(@"\n%@", [RPJSONValidator prettyStringGivenRPJSONValidatorError:error]);
         } else {
             NSLog(@"Failed to validate, but didn't pass an NSError object");
         }
