@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#define RPJSONValidatorErrorDomain @"RPJSONValidatorErrorDomain"
+#define RPJSONValidatorFailingKeys @"RPJSONValidatorFailingKeys"
+#define RPJSONValidatorErrorBadRequirementsParameter 0
+#define RPJSONValidatorErrorBadJSONParameter 1
+#define RPJSONValidatorErrorInvalidJSON 2
 
 @interface RPJSONValidator : NSObject
 

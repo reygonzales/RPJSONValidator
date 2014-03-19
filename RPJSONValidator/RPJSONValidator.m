@@ -32,26 +32,58 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
 
     if(!json) {
         [RPJSONValidator log:@"RPJSONValidator Error: json parameter is nil -- there is nothing to validate. Returning NO"];
-        return NO;
-    }
+        if(error) {
+            *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain
+                                         code:RPJSONValidatorErrorBadJSONParameter
+                                     userInfo:@{
+                                             NSLocalizedDescriptionKey : @"Nothing to validate",
+                                             NSLocalizedFailureReasonErrorKey : @"json parameter is nil",
+                                             NSLocalizedRecoverySuggestionErrorKey : @"pass in valid json"
+                                     }];
+        }
 
-    if(!requirements) {
-        [RPJSONValidator log:@"RPJSONValidator Error: requirements parameter is nil -- there are no requirements. Returning NO"];
         return NO;
     }
 
     if(![json isKindOfClass:[NSDictionary class]] && ![json isKindOfClass:[NSArray class]]) {
         [RPJSONValidator log:@"RPJSONValidator Error: json parameter is not valid JSON (it is not an NSArray or NSDictionary). Returning NO"];
+        if(error) {
+            *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain
+                                         code:RPJSONValidatorErrorBadJSONParameter
+                                     userInfo:@{
+                                             NSLocalizedDescriptionKey : @"Nothing to validate",
+                                             NSLocalizedFailureReasonErrorKey : @"json parameter is not an NSArray or NSDictionary",
+                                             NSLocalizedRecoverySuggestionErrorKey : @"pass in valid json"
+                                     }];
+        }
+        return NO;
+    }
+
+    if(!requirements) {
+        [RPJSONValidator log:@"RPJSONValidator Error: requirements parameter is nil -- there are no requirements. Returning NO"];
+        if(error) {
+            *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain
+                                         code:RPJSONValidatorErrorBadRequirementsParameter
+                                     userInfo:@{
+                                             NSLocalizedDescriptionKey : @"Nothing to validate",
+                                             NSLocalizedFailureReasonErrorKey : @"requirements parameter is nil",
+                                             NSLocalizedRecoverySuggestionErrorKey : @"pass in valid requirements"
+                                     }];
+        }
         return NO;
     }
 
     if(![requirements isKindOfClass:[NSDictionary class]]) {
         [RPJSONValidator log:@"RPJSONValidator Error: requirements parameter is not an NSDictionary. Returning NO"];
-        return NO;
-    }
-
-    if(*error && ![*error isKindOfClass:[NSError class]]) {
-        [RPJSONValidator log:@"RPJSONValidator Error: error parameter is not an NSError **. Returning NO"];
+        if(error) {
+            *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain
+                                         code:RPJSONValidatorErrorBadRequirementsParameter
+                                     userInfo:@{
+                                             NSLocalizedDescriptionKey : @"Nothing to validate",
+                                             NSLocalizedFailureReasonErrorKey : @"requirements parameter is not an NSDictionary",
+                                             NSLocalizedRecoverySuggestionErrorKey : @"pass in valid requirements"
+                                     }];
+        }
         return NO;
     }
 
@@ -89,7 +121,13 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
             [(RPValidatorPredicate *)requirementsValue validateValue:jsonValue withKey:requirementsKey];
 
             if([[(RPValidatorPredicate *)requirementsValue failedRequirementDescriptions] count]) {
-                [userInfo setObject:[(RPValidatorPredicate *)requirementsValue failedRequirementDescriptions] forKey:requirementsKey];
+                NSMutableDictionary *failingKeys = [userInfo objectForKey:RPJSONValidatorFailingKeys];
+
+                if(failingKeys) failingKeys = [failingKeys mutableCopy];
+                else failingKeys = [NSMutableDictionary dictionary];
+
+                [failingKeys setObject:[(RPValidatorPredicate *)requirementsValue failedRequirementDescriptions] forKey:requirementsKey];
+                [userInfo setObject:failingKeys forKey:RPJSONValidatorFailingKeys];
             }
         } else if([requirementsValue isKindOfClass:[NSDictionary class]]) {
             [RPJSONValidator validateValuesFrom:jsonValue
@@ -98,12 +136,23 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
                                        userInfo:userInfo];
         } else {
             [RPJSONValidator log:[NSString stringWithFormat:@"RPJSONValidator Error: requirements parameter isn't valid. Value (%@) isn't an RPValidatorPredicate or NSDictionary or NSNumber. Returning NO", requirementsValue]];
+            *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain
+                                         code:RPJSONValidatorErrorBadRequirementsParameter
+                                     userInfo:@{
+                                             NSLocalizedDescriptionKey : @"Requirements not setup correctly",
+                                             NSLocalizedFailureReasonErrorKey : [NSString stringWithFormat:@"Requirements key (%@) with value (%@) is not an RPValidatorPredicate or NSDictionary", requirementsKey, requirementsValue],
+                                             NSLocalizedRecoverySuggestionErrorKey : @"Review requirements syntax"
+                                     }];
             return NO;
         }
     }
 
-    if([[userInfo allKeys] count]) {
-        *error = [NSError errorWithDomain:@"Banana" code:314159 userInfo:userInfo];
+    if([[userInfo allKeys] count] && error) {
+        [userInfo setObject:@"JSON did not validate" forKey:NSLocalizedDescriptionKey];
+        [userInfo setObject:@"At least one requirement wasn't met" forKey:NSLocalizedFailureReasonErrorKey];
+        [userInfo setObject:@"Perhaps use backup JSON" forKey:NSLocalizedRecoverySuggestionErrorKey];
+
+        *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain code:RPJSONValidatorErrorInvalidJSON userInfo:userInfo];
         return NO;
     }
     return YES;
@@ -114,7 +163,7 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
 }
 
 + (void)log:(NSString *)warning {
-    if(RPJSONValidatorShouldSuppressWarnings)
+    if(!RPJSONValidatorShouldSuppressWarnings)
         NSLog(@"%@", warning);
 }
 

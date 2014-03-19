@@ -40,26 +40,28 @@
 
     NSError *error;
 
-    [RPJSONValidator validateValuesFrom:json
-                       withRequirements:@{
-                               @"phoneNumber" : [RPValidatorPredicate.isString lengthIsGreaterThanOrEqualTo:@7],
-                               @"name" : RPValidatorPredicate.isString,
-                               @"age" : RPValidatorPredicate.isNumber.isOptional,
-                               @"weight" : RPValidatorPredicate.isNotNull.isString,
-                               @"ssn" : RPValidatorPredicate.isNotNull,
-                               @"height" : RPValidatorPredicate.isString,
-                               @"children" : RPValidatorPredicate.isArray,
-                               @"parents" : [RPValidatorPredicate.isArray lengthIsGreaterThan:@3],
-                               @"car" : @{
-                                       @"make" : [RPValidatorPredicate valueIsEqualTo:@"Ford"],
-                                       @"model" : [RPValidatorPredicate valueIsEqualTo:@"Mustang"]
-                               },
-                               @"address" : [RPValidatorPredicate.isString matchesRegularExpression:[NSRegularExpression regularExpressionWithPattern:@"\\d\\d\\d\\d\\d" options:0 error:nil]]
-                       }
-                                  error:&error];
-
-    if(error) {
-        NSLog(@"ERROR: %@", error);
+    if(![RPJSONValidator validateValuesFrom:json
+                           withRequirements:@{
+                                   @"phoneNumber" : [RPValidatorPredicate.isString lengthIsGreaterThanOrEqualTo:@7],
+                                   @"name" : RPValidatorPredicate.isString,
+                                   @"age" : RPValidatorPredicate.isNumber.isOptional,
+                                   @"weight" : RPValidatorPredicate.isNotNull.isString,
+                                   @"ssn" : RPValidatorPredicate.isNull,
+                                   @"height" : RPValidatorPredicate.isString,
+                                   @"children" : RPValidatorPredicate.isArray,
+                                   @"parents" : [RPValidatorPredicate.isArray.isString lengthIsGreaterThan:@3],
+                                   @"car" : @{
+                                           @"make" : [RPValidatorPredicate valueIsEqualTo:@"Ford"],
+                                           @"model" : [RPValidatorPredicate valueIsEqualTo:@"Mustang"]
+                                   },
+                                   @"address" : [RPValidatorPredicate.isString matchesRegularExpression:[NSRegularExpression regularExpressionWithPattern:@"\\d\\d\\d\\d\\d" options:0 error:nil]]
+                           }
+                                      error:&error]) {
+        if(error) {
+            NSLog(@"ERROR: %@", error);
+        } else {
+            NSLog(@"Failed to validate, but didn't pass an NSError object");
+        }
     } else {
         NSLog(@"Woohoo, no errors!");
     }
