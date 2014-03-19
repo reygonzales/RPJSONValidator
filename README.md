@@ -175,6 +175,33 @@ NSDictionary *json = @{
                                       error:&error]
 ```
 
+### Validate by Index ###
+```Objective-C
+NSDictionary *json = @{
+        @"cars" : @[
+            @{
+                 @"make" : @"Ford",
+                 @"model" : @"Mustang"
+            },
+            @{
+                 @"make" : "Tesla Motors",
+                 @"model" : "Model S"
+            },
+            ...
+        ],
+};
+
+[RPJSONValidator validateValuesFrom:json
+                           withRequirements:@{
+                                   @"car" : @{
+                                        @0 : @{ // Access the first element
+                                             @"make" : RPValidatorPredicate.isString,
+                                             @"model" : RPValidatorPredicate.isString
+                                        }
+                                   }
+                                      error:&error]
+```
+
 ## Requirements ##
 * [ARC](http://en.wikipedia.org/wiki/Automatic_Reference_Counting)
 
