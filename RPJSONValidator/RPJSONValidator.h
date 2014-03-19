@@ -21,5 +21,7 @@
           withRequirements:(NSDictionary *)requirements
                      error:(NSError **)error;
 
++ (NSString *)prettyStringGivenRPJSONValidatorError:(NSError *)error;
+
 + (void)setShouldSuppressLogging:(BOOL)shouldSuppressLogging;
 @end

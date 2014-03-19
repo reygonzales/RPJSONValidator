@@ -158,6 +158,21 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
     return YES;
 }
 
++ (NSString *)prettyStringGivenRPJSONValidatorError:(NSError *)error {
+    NSString *prettyString = @"";
+
+    for(NSString *badKey in [[[error userInfo] objectForKey:RPJSONValidatorFailingKeys] allKeys]) {
+        NSArray *requirements = [[[error userInfo] objectForKey:RPJSONValidatorFailingKeys] objectForKey:badKey];
+
+        prettyString = [prettyString stringByAppendingFormat:@"* %@\n", badKey];
+        for(NSString *requirement in requirements)
+            prettyString = [prettyString stringByAppendingFormat:@"     * %@\n", requirement];
+        prettyString = [prettyString stringByAppendingFormat:@"-----\n"];
+    }
+
+    return prettyString;
+}
+
 + (void)setShouldSuppressLogging:(BOOL)shouldSuppressLogging {
     RPJSONValidatorShouldSuppressWarnings = shouldSuppressLogging;
 }
