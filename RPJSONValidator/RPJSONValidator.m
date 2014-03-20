@@ -167,7 +167,6 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
         prettyString = [prettyString stringByAppendingFormat:@"* %@\n", badKey];
         for(NSString *requirement in requirements)
             prettyString = [prettyString stringByAppendingFormat:@"     * %@\n", requirement];
-        prettyString = [prettyString stringByAppendingFormat:@"-----\n"];
     }
 
     return prettyString;

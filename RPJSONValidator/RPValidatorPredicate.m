@@ -157,7 +157,7 @@
         if([jsonValue isKindOfClass:[NSString class]] && [substring isKindOfClass:[NSString class]]) {
             return [(NSString *)jsonValue rangeOfString:substring].location != NSNotFound;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) with value (%@) must contain substring %@", jsonKey, jsonValue, substring]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Value (%@) must contain substring %@", jsonValue, substring]];
             return NO;
         }
     };
@@ -172,7 +172,7 @@
         if([jsonValue isKindOfClass:[NSString class]]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSString, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSString, given (%@)", [jsonValue class]]];
             return NO;
         }
     };
@@ -187,7 +187,7 @@
         if([jsonValue isKindOfClass:[NSNumber class]]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSNumber, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
     };
@@ -202,7 +202,7 @@
         if([jsonValue isKindOfClass:[NSDictionary class]]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSDictionary, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSDictionary, given (%@)", [jsonValue class]]];
             return NO;
         }
     };
@@ -217,7 +217,7 @@
         if([jsonValue isKindOfClass:[NSArray class]]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSArray, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSArray, given (%@)", [jsonValue class]]];
             return NO;
         }
     };
@@ -232,7 +232,7 @@
         if([jsonValue isKindOfClass:[NSNumber class]]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires BOOL (NSNumber), given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires BOOL (NSNumber), given (%@)", [jsonValue class]]];
             return NO;
         }
     };
@@ -247,7 +247,7 @@
         if([jsonValue isEqual:[NSNull null]]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires null, given (%@)", jsonKey, jsonValue]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires null, given (%@)", jsonValue]];
             return NO;
         }
     };
@@ -262,7 +262,7 @@
         if(![jsonValue isEqual:[NSNull null]]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires non-null value, given (%@)", jsonKey, jsonValue]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires non-null value, given (%@)", jsonValue]];
             return NO;
         }
     };
@@ -278,7 +278,7 @@
         if(developerReturnValue) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Custom block for key (%@) with value (%@) returned NO", jsonKey, jsonValue]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Custom block for with value (%@) returned NO", jsonValue]];
             return NO;
         }
     };
@@ -297,14 +297,14 @@
         else if([jsonValue isKindOfClass:[NSString class]])
             length = [(NSString *)jsonValue length];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length (NSString) or count (NSArray)", jsonKey]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
 
         if(length < [value unsignedIntegerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length or count greater than or equal to (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length or count greater than or equal to (%@)", value]];
             return NO;
         }
     };
@@ -323,14 +323,14 @@
         else if([jsonValue isKindOfClass:[NSString class]])
             length = [(NSString *)jsonValue length];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length (NSString) or count (NSArray)", jsonKey]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
 
         if(length <= [value unsignedIntegerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length or count greater than (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length or count greater than (%@)", value]];
             return NO;
         }
     };
@@ -349,14 +349,14 @@
         else if([jsonValue isKindOfClass:[NSString class]])
             length = [(NSString *)jsonValue length];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length (NSString) or count (NSArray)", jsonKey]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
 
         if(length == [value unsignedIntegerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length or count equal to (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length or count equal to (%@)", value]];
             return NO;
         }
     };
@@ -375,14 +375,14 @@
         else if([jsonValue isKindOfClass:[NSString class]])
             length = [(NSString *)jsonValue length];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length (NSString) or count (NSArray)", jsonKey]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
 
         if(length != [value unsignedIntegerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length or count equal to (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length or count equal to (%@)", value]];
             return NO;
         }
     };
@@ -401,14 +401,14 @@
         else if([jsonValue isKindOfClass:[NSString class]])
             length = [(NSString *)jsonValue length];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length (NSString) or count (NSArray)", jsonKey]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
 
         if(length >= [value unsignedIntegerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length or count less than (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length or count less than (%@)", value]];
             return NO;
         }
     };
@@ -427,14 +427,14 @@
         else if([jsonValue isKindOfClass:[NSString class]])
             length = [(NSString *)jsonValue length];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length (NSString) or count (NSArray)", jsonKey]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
 
         if(length > [value unsignedIntegerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires length or count less than or equal to (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length or count less than or equal to (%@)", value]];
             return NO;
         }
     };
@@ -451,14 +451,14 @@
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSNumber, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
 
         if(integerValue < [value integerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires value greater than or equal to (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires value greater than or equal to (%@)", value]];
             return NO;
         }
     };
@@ -475,14 +475,14 @@
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSNumber, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
 
         if(integerValue <= [value integerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires value greater than (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires value greater than (%@)", value]];
             return NO;
         }
     };
@@ -498,18 +498,18 @@
             if([(NSNumber *)jsonValue isEqualToNumber:value] ) {
                 return YES;
             } else {
-                [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires value not equal to (%@)", jsonKey, value]];
+                [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires value not equal to (%@)", value]];
                 return NO;
             }
         } else if([jsonValue isKindOfClass:[NSString class]] && [value isKindOfClass:[NSString class]]) {
             if([(NSString *)jsonValue isEqualToString:jsonValue]) {
                 return YES;
             } else {
-                [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires value not equal to (%@)", jsonKey, value]];
+                [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires value not equal to (%@)", value]];
                 return NO;
             }
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Error comparing value (%@) with value (%@) for key (%@)", jsonValue, value, jsonKey]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Error comparing value (%@) with value (%@)", jsonValue, value]];
             return NO;
         }
 
@@ -528,14 +528,14 @@
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSNumber, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
 
         if(integerValue != [value integerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires value equal to (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires value equal to (%@)", value]];
             return NO;
         }
     };
@@ -552,14 +552,14 @@
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSNumber, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
 
         if(integerValue >= [value integerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires value less than (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires value less than (%@)", value]];
             return NO;
         }
     };
@@ -576,14 +576,14 @@
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSNumber, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
 
         if(integerValue > [value integerValue]) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires value less than or equal to (%@)", jsonKey, value]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires value less than or equal to (%@)", value]];
             return NO;
         }
     };
@@ -596,12 +596,12 @@
 - (instancetype)matchesRegularExpression:(NSRegularExpression *)expression {
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         if(![jsonValue isKindOfClass:[NSString class]]) {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) requires NSString, given (%@)", jsonKey, [jsonValue class]]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSString, given (%@)", [jsonValue class]]];
             return NO;
         }
 
         if(![expression isKindOfClass:[NSRegularExpression class]]) {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"matchesRegularExpression: called with parameter that must be an NSRegularExpression for Key (%@) with value (%@)", jsonKey, jsonValue]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"matchesRegularExpression: called with parameter that must be an NSRegularExpression with value (%@)", jsonValue]];
             return NO;
         }
 
@@ -612,7 +612,7 @@
         if(firstMatch && firstMatch.range.location != NSNotFound) {
             return YES;
         } else {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) must match regular expression (%@)", jsonKey, jsonValue, expression]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Must match regular expression (%@)", expression]];
             return NO;
         }
     };
@@ -631,7 +631,7 @@
         }
     } else {
         if(!self.optional) {
-            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key (%@) not found", key]];
+            [self.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Key not found"]];
         }
     }
 }
