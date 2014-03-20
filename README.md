@@ -92,7 +92,7 @@ NSError *error;
                    } error:&error];
 
 if(error) {
-    NSLog(@"\n%@", [RPJSONValidator prettyStringGivenRPJSONValidatorError:error]);
+    NSLog(@"%@", [RPJSONValidator prettyStringGivenRPJSONValidatorError:error]);
 } else {
     NSLog(@"Woohoo, no errors!");
 }
