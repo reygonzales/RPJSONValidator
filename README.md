@@ -115,7 +115,7 @@ Each key-value pair describes requirements for each JSON value. For example, the
   * Require value == [NSNull null]
 * isNotNull
   * Require value != [NSNull null]
-* validateValueWithBlock(BOOL (^)(NSString *jsonKey, id jsonValue)):block
+* validateValueWithBlock:(BOOL (^)(NSString *jsonKey, id jsonValue))block
   * For custom validations, given the JSON key and corresponding value (could be nil, [NSNull null], NSNumber, NSArray, NSDictionary, or NSString), return YES if valid and NO if invalid
 * lengthIsLessThan:(NSNumber *)value
 * lengthIsLessThanOrEqualTo:(NSNumber *)value
