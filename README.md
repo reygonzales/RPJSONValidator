@@ -144,17 +144,14 @@ NSError *error;
 NSLog(@"%@", [RPJSONValidator prettyStringGivenRPJSONValidatorError:error];
 
 // Output:
-// 2014-03-19 14:34:57.733 RPJSONValidator[41306:60b] 
+// 2014-03-19 23:08:02.451 RPJSONValidator[42273:60b] 
 // * age
-//      * Key (age) requires NSNumber, given (__NSCFConstantString)
-// -----
+//      * Requires NSNumber, given (__NSCFConstantString)
 // * height
-//      * Key (height) not found
-// -----
+//      * Key not found
 // * parents
-//      * Key (parents) requires NSString, given (__NSArrayI)
-//      * Key (parents) requires length or count less than or equal to (3)
-// -----
+//      * Requires NSString, given (__NSArrayI)
+//      * Requires length or count less than or equal to (3)
 ```
 
 ### Sub-JSON Validating ###
