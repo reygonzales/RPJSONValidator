@@ -190,7 +190,7 @@ NSDictionary *json = @{
 
 [RPJSONValidator validateValuesFrom:json
                            withRequirements:@{
-                                   @"car" : @{
+                                   @"cars" : @{
                                         @0 : @{ // Access the first element
                                              @"make" : RPValidatorPredicate.isString,
                                              @"model" : RPValidatorPredicate.isString
