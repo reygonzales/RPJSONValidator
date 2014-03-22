@@ -105,6 +105,7 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
     //      * Keys correspond to JSON keys or indices of arrays
     // * Values: RPValidatorPredicate/NSDictionary
     
+    __block BOOL encounteredError = NO;
     [requirements enumerateKeysAndObjectsUsingBlock:^(id requirementsKey, id requirementsValue, BOOL *stop) {
         
         id jsonValue;
@@ -136,28 +137,35 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
                                        userInfo:userInfo];
         } else {
             [RPJSONValidator log:[NSString stringWithFormat:@"RPJSONValidator Error: requirements parameter isn't valid. Value (%@) isn't an RPValidatorPredicate or NSDictionary or NSNumber. Returning NO", requirementsValue]];
-            *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain
-                                         code:RPJSONValidatorErrorBadRequirementsParameter
-                                     userInfo:@{
-                                                NSLocalizedDescriptionKey : @"Requirements not setup correctly",
-                                                NSLocalizedFailureReasonErrorKey : [NSString stringWithFormat:@"Requirements key (%@) with value (%@) is not an RPValidatorPredicate or NSDictionary", requirementsKey, requirementsValue],
-                                                NSLocalizedRecoverySuggestionErrorKey : @"Review requirements syntax"
-                                                }];
+            
+            encounteredError = YES;
+            if (error) {
+                *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain
+                                             code:RPJSONValidatorErrorBadRequirementsParameter
+                                         userInfo:@{
+                                                    NSLocalizedDescriptionKey : @"Requirements not setup correctly",
+                                                    NSLocalizedFailureReasonErrorKey : [NSString stringWithFormat:@"Requirements key (%@) with value (%@) is not an RPValidatorPredicate or NSDictionary", requirementsKey, requirementsValue],
+                                                    NSLocalizedRecoverySuggestionErrorKey : @"Review requirements syntax"
+                                                    }];
+            }
+            
             *stop = YES;
         }
         
     }];
     
-    if (*error) {
+    if (encounteredError) {
         return NO;
     }
     
-    if([[userInfo allKeys] count] && error) {
+    if([[userInfo allKeys] count]) {
         [userInfo setObject:@"JSON did not validate" forKey:NSLocalizedDescriptionKey];
         [userInfo setObject:@"At least one requirement wasn't met" forKey:NSLocalizedFailureReasonErrorKey];
         [userInfo setObject:@"Perhaps use backup JSON" forKey:NSLocalizedRecoverySuggestionErrorKey];
         
-        *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain code:RPJSONValidatorErrorInvalidJSON userInfo:userInfo];
+        if (error) {
+            *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain code:RPJSONValidatorErrorInvalidJSON userInfo:userInfo];
+        }
         return NO;
     }
     return YES;
