@@ -159,11 +159,11 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
     }
     
     if([[userInfo allKeys] count]) {
-        [userInfo setObject:@"JSON did not validate" forKey:NSLocalizedDescriptionKey];
-        [userInfo setObject:@"At least one requirement wasn't met" forKey:NSLocalizedFailureReasonErrorKey];
-        [userInfo setObject:@"Perhaps use backup JSON" forKey:NSLocalizedRecoverySuggestionErrorKey];
-        
         if (error) {
+            [userInfo setObject:@"JSON did not validate" forKey:NSLocalizedDescriptionKey];
+            [userInfo setObject:@"At least one requirement wasn't met" forKey:NSLocalizedFailureReasonErrorKey];
+            [userInfo setObject:@"Perhaps use backup JSON" forKey:NSLocalizedRecoverySuggestionErrorKey];
+
             *error = [NSError errorWithDomain:RPJSONValidatorErrorDomain code:RPJSONValidatorErrorInvalidJSON userInfo:userInfo];
         }
         return NO;
