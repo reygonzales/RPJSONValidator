@@ -179,9 +179,9 @@ static BOOL RPJSONValidatorShouldSuppressWarnings;
     [failingKeys enumerateKeysAndObjectsUsingBlock:^(NSString *badKey, NSArray *requirements, BOOL *stop) {
         prettyString = [prettyString stringByAppendingFormat:@"* %@\n", badKey];
         
-        [requirements enumerateObjectsUsingBlock:^(NSString *requirement, NSUInteger idx, BOOL *stop_in) {
+        for (NSString *requirement in requirements) {
             prettyString = [prettyString stringByAppendingFormat:@"     * %@\n", requirement];
-        }];
+        }
     }];
     
     return prettyString;
