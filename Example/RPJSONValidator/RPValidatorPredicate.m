@@ -31,117 +31,117 @@
 }
 
 + (instancetype)isOptional {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isOptional];
 }
 
 + (instancetype)hasSubstring:(NSString *)substring {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate hasSubstring:substring];
 }
 
 + (instancetype)isString {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isString];
 }
 
 + (instancetype)isNumber {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isNumber];
 }
 
 + (instancetype)isDictionary {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isDictionary];
 }
 
 + (instancetype)isArray {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isArray];
 }
 
 + (instancetype)isBoolean {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isBoolean];
 }
 
 + (instancetype)isNull {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isNull];
 }
 
 + (instancetype)isNotNull {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate isNotNull];
 }
 
 + (instancetype)validateValueWithBlock:(ValidatorBlock)block {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate validateValueWithBlock:block];
 }
 
 + (instancetype)lengthIsLessThan:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsLessThan:value];
 }
 
 + (instancetype)lengthIsLessOrEqualTo:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsLessOrEqualTo:value];
 }
 
 + (instancetype)lengthIsEqualTo:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsEqualTo:value];
 }
 
 + (instancetype)lengthIsNotEqualTo:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsNotEqualTo:value];
 }
 
 + (instancetype)lengthIsGreaterThanOrEqualTo:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsGreaterThanOrEqualTo:value];
 }
 
 + (instancetype)lengthIsGreaterThan:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsGreaterThan:value];
 }
 
 + (instancetype)valueIsLessThan:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate valueIsLessThan:value];
 }
 
 + (instancetype)valueIsLessOrEqualTo:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate valueIsLessThanOrEqualTo:value];
 }
 
 + (instancetype)valueIsEqualTo:(id)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate valueIsEqualTo:value];
 }
 
 + (instancetype)valueIsNotEqualTo:(id)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate valueIsNotEqualTo:value];
 }
 
 + (instancetype)valueIsGreaterThanOrEqualTo:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate valueIsGreaterThanOrEqualTo:value];
 }
 
 + (instancetype)valueIsGreaterThan:(NSNumber *)value {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate valueIsGreaterThan:value];
 }
 
 + (instancetype)matchesRegularExpression:(NSRegularExpression *)expression {
-    RPValidatorPredicate *predicate = [RPValidatorPredicate new];
+    RPValidatorPredicate *predicate = [self new];
     return [predicate matchesRegularExpression:expression];
 }
 
