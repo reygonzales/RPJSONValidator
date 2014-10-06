@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4ADAC12919E30C9F00615B8A /* RPJSONValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADAC12619E30C9F00615B8A /* RPJSONValidator.m */; };
+		4ADAC12A19E30C9F00615B8A /* RPValidatorPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADAC12819E30C9F00615B8A /* RPValidatorPredicate.m */; };
 		D151641018D21C3800C8B13C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D151640F18D21C3800C8B13C /* Foundation.framework */; };
 		D151641218D21C3800C8B13C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D151641118D21C3800C8B13C /* CoreGraphics.framework */; };
 		D151641418D21C3800C8B13C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D151641318D21C3800C8B13C /* UIKit.framework */; };
@@ -21,8 +23,6 @@
 		D164846C18D90EC800C8394B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D164845C18D90EC800C8394B /* InfoPlist.strings */; };
 		D164846D18D90EC800C8394B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D164845E18D90EC800C8394B /* Images.xcassets */; };
 		D164846E18D90EC800C8394B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D164845F18D90EC800C8394B /* main.m */; };
-		D164846F18D90EC800C8394B /* RPJSONValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = D164846218D90EC800C8394B /* RPJSONValidator.m */; };
-		D164847018D90EC800C8394B /* RPValidatorPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = D164846418D90EC800C8394B /* RPValidatorPredicate.m */; };
 		D164847118D90EC800C8394B /* RPJSONValidator-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D164846518D90EC800C8394B /* RPJSONValidator-Info.plist */; };
 		D164847218D90EC800C8394B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D164846818D90EC800C8394B /* ViewController.m */; };
 /* End PBXBuildFile section */
@@ -38,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4ADAC12519E30C9F00615B8A /* RPJSONValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPJSONValidator.h; sourceTree = "<group>"; };
+		4ADAC12619E30C9F00615B8A /* RPJSONValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPJSONValidator.m; sourceTree = "<group>"; };
+		4ADAC12719E30C9F00615B8A /* RPValidatorPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPValidatorPredicate.h; sourceTree = "<group>"; };
+		4ADAC12819E30C9F00615B8A /* RPValidatorPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPValidatorPredicate.m; sourceTree = "<group>"; };
 		D151640C18D21C3800C8B13C /* RPJSONValidator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RPJSONValidator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D151640F18D21C3800C8B13C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D151641118D21C3800C8B13C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -54,10 +58,6 @@
 		D164845D18D90EC800C8394B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D164845E18D90EC800C8394B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D164845F18D90EC800C8394B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D164846118D90EC800C8394B /* RPJSONValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPJSONValidator.h; sourceTree = "<group>"; };
-		D164846218D90EC800C8394B /* RPJSONValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPJSONValidator.m; sourceTree = "<group>"; };
-		D164846318D90EC800C8394B /* RPValidatorPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPValidatorPredicate.h; sourceTree = "<group>"; };
-		D164846418D90EC800C8394B /* RPValidatorPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPValidatorPredicate.m; sourceTree = "<group>"; };
 		D164846518D90EC800C8394B /* RPJSONValidator-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RPJSONValidator-Info.plist"; sourceTree = "<group>"; };
 		D164846618D90EC800C8394B /* RPJSONValidator-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RPJSONValidator-Prefix.pch"; sourceTree = "<group>"; };
 		D164846718D90EC800C8394B /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -88,6 +88,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4ADAC12419E30C9F00615B8A /* RPJSONValidator */ = {
+			isa = PBXGroup;
+			children = (
+				4ADAC12519E30C9F00615B8A /* RPJSONValidator.h */,
+				4ADAC12619E30C9F00615B8A /* RPJSONValidator.m */,
+				4ADAC12719E30C9F00615B8A /* RPValidatorPredicate.h */,
+				4ADAC12819E30C9F00615B8A /* RPValidatorPredicate.m */,
+			);
+			path = RPJSONValidator;
+			sourceTree = SOURCE_ROOT;
+		};
 		D151640318D21C3800C8B13C = {
 			isa = PBXGroup;
 			children = (
@@ -146,24 +157,13 @@
 				D164845C18D90EC800C8394B /* InfoPlist.strings */,
 				D164845E18D90EC800C8394B /* Images.xcassets */,
 				D164845F18D90EC800C8394B /* main.m */,
-				D164846018D90EC800C8394B /* RPJSONValidator */,
 				D164846518D90EC800C8394B /* RPJSONValidator-Info.plist */,
 				D164846618D90EC800C8394B /* RPJSONValidator-Prefix.pch */,
 				D164846718D90EC800C8394B /* ViewController.h */,
 				D164846818D90EC800C8394B /* ViewController.m */,
+				4ADAC12419E30C9F00615B8A /* RPJSONValidator */,
 			);
 			path = Example;
-			sourceTree = "<group>";
-		};
-		D164846018D90EC800C8394B /* RPJSONValidator */ = {
-			isa = PBXGroup;
-			children = (
-				D164846118D90EC800C8394B /* RPJSONValidator.h */,
-				D164846218D90EC800C8394B /* RPJSONValidator.m */,
-				D164846318D90EC800C8394B /* RPValidatorPredicate.h */,
-				D164846418D90EC800C8394B /* RPValidatorPredicate.m */,
-			);
-			path = RPJSONValidator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,8 +267,8 @@
 			files = (
 				D164846E18D90EC800C8394B /* main.m in Sources */,
 				D164846918D90EC800C8394B /* AppDelegate.m in Sources */,
-				D164847018D90EC800C8394B /* RPValidatorPredicate.m in Sources */,
-				D164846F18D90EC800C8394B /* RPJSONValidator.m in Sources */,
+				4ADAC12919E30C9F00615B8A /* RPJSONValidator.m in Sources */,
+				4ADAC12A19E30C9F00615B8A /* RPValidatorPredicate.m in Sources */,
 				D164847218D90EC800C8394B /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
