@@ -24,6 +24,9 @@ typedef BOOL (^ValidatorBlock)(NSString *jsonKey, id jsonValue);
 + (instancetype)isNotNull;
 + (instancetype)validateValueWithBlock:(ValidatorBlock)block;
 
+// Array
++ (instancetype)valuesWithRequirements:(NSDictionary *)requirements;
+
 // Array/String methods
 + (instancetype)lengthIsLessThan:(NSNumber *)value;
 + (instancetype)lengthIsLessOrEqualTo:(NSNumber *)value;
@@ -54,6 +57,9 @@ typedef BOOL (^ValidatorBlock)(NSString *jsonKey, id jsonValue);
 - (instancetype)isNull;
 - (instancetype)isNotNull;
 - (instancetype)validateValueWithBlock:(ValidatorBlock)block;
+
+// Array
+- (instancetype)valuesWithRequirements:(NSDictionary *)requirements;
 
 // Array/String methods
 - (instancetype)lengthIsLessThan:(NSNumber *)value;

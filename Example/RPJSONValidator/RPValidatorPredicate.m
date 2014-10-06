@@ -7,6 +7,7 @@
 //
 
 #import "RPValidatorPredicate.h"
+#import "RPJSONValidator.h"
 
 @interface RPValidatorPredicate()
 @property (nonatomic, strong) NSMutableArray *requirements; // An array of ValidatorBlocks
@@ -26,7 +27,7 @@
         self.requirements = [NSMutableArray array];
         self.failedRequirementDescriptions = [NSMutableArray array];
     }
-
+    
     return self;
 }
 
@@ -78,6 +79,12 @@
 + (instancetype)validateValueWithBlock:(ValidatorBlock)block {
     RPValidatorPredicate *predicate = [self new];
     return [predicate validateValueWithBlock:block];
+}
+
++ (instancetype)valuesWithRequirements:(NSDictionary *)requirements {
+    RPValidatorPredicate *predicate = [self new];
+    
+    return [predicate valuesWithRequirements:requirements];
 }
 
 + (instancetype)lengthIsLessThan:(NSNumber *)value {
@@ -162,9 +169,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -178,9 +185,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -194,9 +201,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -210,9 +217,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -226,9 +233,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -242,9 +249,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -258,9 +265,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -274,9 +281,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -291,9 +298,44 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
+    
+    return self;
+}
 
+- (instancetype)valuesWithRequirements:(NSDictionary *)requirements {
+    __weak typeof (self) weakSelf = self;
+    ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
+        if ([jsonValue isKindOfClass:[NSArray class]]) {
+            BOOL isValid = YES;
+            
+            for (id object in (NSArray *)jsonValue)
+            {
+                NSError *error = nil;
+                
+                if (![RPJSONValidator validateValuesFrom:object
+                                        withRequirements:requirements
+                                                   error:&error]) {
+                    isValid = NO;
+                    
+                    id errorMessageObject = error.userInfo[RPJSONValidatorFailingKeys];
+                    if (errorMessageObject != nil) {
+                        [weakSelf.failedRequirementDescriptions addObject:error.userInfo[RPJSONValidatorFailingKeys]];
+                    }
+                }
+            }
+            
+            return isValid;
+        }
+        else {
+            [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSArray, given (%@)", [jsonValue class]]];
+            return NO;
+        }
+    };
+    
+    [self.requirements addObject:block];
+    
     return self;
 }
 
@@ -301,7 +343,7 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSUInteger length;
-
+        
         if([jsonValue isKindOfClass:[NSArray class]])
             length = [(NSArray *)jsonValue count];
         else if([jsonValue isKindOfClass:[NSString class]])
@@ -310,7 +352,7 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
-
+        
         if(length < [value unsignedIntegerValue]) {
             return YES;
         } else {
@@ -318,9 +360,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -328,7 +370,7 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSUInteger length;
-
+        
         if([jsonValue isKindOfClass:[NSArray class]])
             length = [(NSArray *)jsonValue count];
         else if([jsonValue isKindOfClass:[NSString class]])
@@ -337,7 +379,7 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
-
+        
         if(length <= [value unsignedIntegerValue]) {
             return YES;
         } else {
@@ -345,9 +387,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -355,7 +397,7 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSUInteger length;
-
+        
         if([jsonValue isKindOfClass:[NSArray class]])
             length = [(NSArray *)jsonValue count];
         else if([jsonValue isKindOfClass:[NSString class]])
@@ -364,7 +406,7 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
-
+        
         if(length == [value unsignedIntegerValue]) {
             return YES;
         } else {
@@ -372,9 +414,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -382,7 +424,7 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSUInteger length;
-
+        
         if([jsonValue isKindOfClass:[NSArray class]])
             length = [(NSArray *)jsonValue count];
         else if([jsonValue isKindOfClass:[NSString class]])
@@ -391,7 +433,7 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
-
+        
         if(length != [value unsignedIntegerValue]) {
             return YES;
         } else {
@@ -399,9 +441,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -409,7 +451,7 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSUInteger length;
-
+        
         if([jsonValue isKindOfClass:[NSArray class]])
             length = [(NSArray *)jsonValue count];
         else if([jsonValue isKindOfClass:[NSString class]])
@@ -418,7 +460,7 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
-
+        
         if(length >= [value unsignedIntegerValue]) {
             return YES;
         } else {
@@ -426,9 +468,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -436,7 +478,7 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSUInteger length;
-
+        
         if([jsonValue isKindOfClass:[NSArray class]])
             length = [(NSArray *)jsonValue count];
         else if([jsonValue isKindOfClass:[NSString class]])
@@ -445,7 +487,7 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires length (NSString) or count (NSArray)"]];
             return NO;
         }
-
+        
         if(length > [value unsignedIntegerValue]) {
             return YES;
         } else {
@@ -453,9 +495,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -463,14 +505,14 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSInteger integerValue;
-
+        
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
-
+        
         if(integerValue < [value integerValue]) {
             return YES;
         } else {
@@ -478,9 +520,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -488,14 +530,14 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSInteger integerValue;
-
+        
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
-
+        
         if(integerValue <= [value integerValue]) {
             return YES;
         } else {
@@ -503,9 +545,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -530,12 +572,12 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Error comparing value (%@) with value (%@)", jsonValue, value]];
             return NO;
         }
-
-
+        
+        
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -543,14 +585,14 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSInteger integerValue;
-
+        
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
-
+        
         if(integerValue != [value integerValue]) {
             return YES;
         } else {
@@ -558,9 +600,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -568,14 +610,14 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSInteger integerValue;
-
+        
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
-
+        
         if(integerValue >= [value integerValue]) {
             return YES;
         } else {
@@ -583,9 +625,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -593,14 +635,14 @@
     __weak typeof (self) weakSelf = self;
     ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
         NSInteger integerValue;
-
+        
         if([jsonValue isKindOfClass:[NSNumber class]])
             integerValue = [(NSNumber *)jsonValue integerValue];
         else {
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSNumber, given (%@)", [jsonValue class]]];
             return NO;
         }
-
+        
         if(integerValue > [value integerValue]) {
             return YES;
         } else {
@@ -608,9 +650,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 
@@ -621,16 +663,16 @@
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSString, given (%@)", [jsonValue class]]];
             return NO;
         }
-
+        
         if(![expression isKindOfClass:[NSRegularExpression class]]) {
             [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"matchesRegularExpression: called with parameter that must be an NSRegularExpression with value (%@)", jsonValue]];
             return NO;
         }
-
+        
         NSTextCheckingResult *firstMatch = [expression firstMatchInString:jsonValue
                                                                   options:0
                                                                     range:NSMakeRange(0, [jsonValue length])];
-
+        
         if(firstMatch && firstMatch.range.location != NSNotFound) {
             return YES;
         } else {
@@ -638,9 +680,9 @@
             return NO;
         }
     };
-
+    
     [self.requirements addObject:block];
-
+    
     return self;
 }
 

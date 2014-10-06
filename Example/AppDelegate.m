@@ -12,10 +12,8 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
-
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    
     NSDictionary *json = @{
             @"phoneNumber" : @"123-555-6789",
             @"name" : @"Johnny Ringo",
@@ -35,11 +33,18 @@
                     @"make" : @"Ford",
                     @"model" : @"Mustang"
             },
-            @"address" : @"123 3rd Street, Neverland, California, 94555"
-    };
-
+            @"address" : @"123 3rd Street, Neverland, California, 94555",
+            @"friends" : @[
+                           @{@"name" : @"Anna",
+                             @"age"  : @25},
+                           @{@"name" : @"Maria",
+                             @"age"  : @19},
+                           @{@"name" : @"WrongObject",
+                             @"counry" : @"UA"}]
+                           };
+    
     NSError *error;
-
+    
     if(![RPJSONValidator validateValuesFrom:json
                            withRequirements:@{
                                    @"phoneNumber" : [RPValidatorPredicate.isString lengthIsGreaterThanOrEqualTo:@7],
@@ -54,8 +59,11 @@
                                            @"make" : [RPValidatorPredicate valueIsEqualTo:@"Ford"],
                                            @"model" : [RPValidatorPredicate valueIsEqualTo:@"Mustang"]
                                    },
-                                   @"address" : [RPValidatorPredicate.isString matchesRegularExpression:[NSRegularExpression regularExpressionWithPattern:@"\\d\\d\\d\\d\\d" options:0 error:nil]]
-                           }
+                                   @"address" : [RPValidatorPredicate.isString matchesRegularExpression:[NSRegularExpression regularExpressionWithPattern:@"\\d\\d\\d\\d\\d" options:0 error:nil]],
+                                   @"friends" : [RPValidatorPredicate.isArray valuesWithRequirements:
+                                                 @{@"name" : RPValidatorPredicate.isString,
+                                                   @"age"  : RPValidatorPredicate.isNumber}]
+                                              }
                                       error:&error]) {
         if(error) {
             NSLog(@"\n%@", [RPJSONValidator prettyStringGivenRPJSONValidatorError:error]);
@@ -65,10 +73,11 @@
     } else {
         NSLog(@"Woohoo, no errors!");
     }
-
+    
+    
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
