@@ -86,6 +86,11 @@
     return [predicate lengthIsLessThan:value];
 }
 
++ (instancetype)valuesWithRequirements:(NSDictionary *)requirements {
+    RPValidatorPredicate *predicate = [self new];
+    return [predicate valuesWithRequirements:requirements];
+}
+
 + (instancetype)lengthIsLessOrEqualTo:(NSNumber *)value {
     RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsLessOrEqualTo:value];
