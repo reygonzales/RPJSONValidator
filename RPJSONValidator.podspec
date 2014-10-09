@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RPJSONValidator"
-  s.version      = "0.1.4"
+  s.version      = "0.2.0"
   s.summary      = "Validate JSON before it is mapped"
   s.homepage     = "https://github.com/reygonzales/RPJSONValidator"
   s.license      = 'MIT'
