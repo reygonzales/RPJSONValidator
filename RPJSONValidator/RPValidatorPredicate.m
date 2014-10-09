@@ -7,6 +7,7 @@
 //
 
 #import "RPValidatorPredicate.h"
+#import "RPJSONValidator.h"
 
 @interface RPValidatorPredicate()
 @property (nonatomic, strong) NSMutableArray *requirements; // An array of ValidatorBlocks
@@ -83,6 +84,11 @@
 + (instancetype)lengthIsLessThan:(NSNumber *)value {
     RPValidatorPredicate *predicate = [self new];
     return [predicate lengthIsLessThan:value];
+}
+
++ (instancetype)valuesWithRequirements:(NSDictionary *)requirements {
+    RPValidatorPredicate *predicate = [self new];
+    return [predicate valuesWithRequirements:requirements];
 }
 
 + (instancetype)lengthIsLessOrEqualTo:(NSNumber *)value {
@@ -294,6 +300,41 @@
 
     [self.requirements addObject:block];
 
+    return self;
+}
+
+- (instancetype)valuesWithRequirements:(NSDictionary *)requirements {
+    __weak typeof (self) weakSelf = self;
+    ValidatorBlock block = ^BOOL(NSString *jsonKey, id jsonValue) {
+        if ([jsonValue isKindOfClass:[NSArray class]]) {
+            BOOL isValid = YES;
+            
+            for (id object in (NSArray *)jsonValue)
+            {
+                NSError *error = nil;
+                
+                if (![RPJSONValidator validateValuesFrom:object
+                                        withRequirements:requirements
+                                                   error:&error]) {
+                    isValid = NO;
+                    
+                    id errorMessageObject = error.userInfo[RPJSONValidatorFailingKeys];
+                    if (errorMessageObject != nil) {
+                        [weakSelf.failedRequirementDescriptions addObject:error.userInfo[RPJSONValidatorFailingKeys]];
+                    }
+                }
+            }
+            
+            return isValid;
+        }
+        else {
+            [weakSelf.failedRequirementDescriptions addObject:[NSString stringWithFormat:@"Requires NSArray, given (%@)", [jsonValue class]]];
+            return NO;
+        }
+    };
+    
+    [self.requirements addObject:block];
+    
     return self;
 }
 
