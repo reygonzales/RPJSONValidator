@@ -130,6 +130,8 @@ Each key-value pair describes requirements for each JSON value. For example, the
 * valueIsGreaterThanOrEqualTo:(NSNumber *)value
 * valueIsGreaterThan:(NSNumber *)value
 * matchesRegularExpression:(NSRegularExpression *)expression
+* valuesWithRequirements:(NSDictionary *)requirements
+  * Evaluate an array with requirements
 
 ## But Wait, There's More! ##
 ### Pretty Printing ###
@@ -197,6 +199,31 @@ NSDictionary *json = @{
                                         }
                                    }
                                       error:&error]
+```
+
+### Validate an array ###
+```Objective-C
+NSDictionary *json = @{
+        @"friends" :  @[
+                @{@"name" : @"Anna", @"age" : @25},
+                @{@"name" : @"Maria", @"age" : @19},
+                @{@"name" : @"WrongObject", @"counry" : @"UA"}]
+};
+
+NSError *error;
+[RPJSONValidator validateValuesFrom:json
+                       withRequirements:@{
+                               @"friends" : [RPValidatorPredicate.isArray valuesWithRequirements:@{
+                                       @"name" : RPValidatorPredicate.isString,
+                                       @"age"  : RPValidatorPredicate.isNumber}]
+                       }
+                                  error:&error]
+
+if(error) {
+    // Something in the array isn't valid
+} else {
+    // Every element in the array is valid
+}
 ```
 
 ## Requirements ##
